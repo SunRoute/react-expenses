@@ -1,16 +1,29 @@
-# React + Vite
+# FIREBASE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Configuración
 
-Currently, two official plugins are available:
+-Crear cuenta en firebase
+-Crear proyecto
+-Elegir nombre y desactivar IA > Continuar
+-Desactivar analytics > Crear proyecto > Continuar
+-+Agregar app y Clicar icono WEB </>
+-Nombrar app y agregar el SDK (usar npm)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## base de datos
 
-## React Compiler
+-En Categorías de producto > Compilación > Firestore Database
+-Crear Base de datos
+-Edición Standar > ID por defecto > Ubicación cercana > Producción > Crear
+-En reglas cambiar 'allow read, write' a 'if true' > Publicar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Autenticación
 
-## Expanding the ESLint configuration
+-En Categorías de producto > Compilación > Authentication
+-Comenzar
+-Método de acceso > Correo electrónico/contraseña > Habilitar
+-Agregar proveedor nuevo > Google > Habilitar
+-Nombre público por defecto y email de asistencia del instituto > Guardar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# APP
+
+-Crear archivo .env con las variables de firebase (ver archivo .env.example). Incluir el archivo en .gitignore
