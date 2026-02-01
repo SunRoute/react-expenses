@@ -1,10 +1,10 @@
 import { Toaster } from "react-hot-toast";
-import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import ProjectDetail from "./pages/ProjectDetail";
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
 import { getCurrentUser } from "./services/authService";
-import ProjectDetail from "./pages/ProjectDetail";
 
 function App() {
   const PrivateRoute = ({ children }) => {

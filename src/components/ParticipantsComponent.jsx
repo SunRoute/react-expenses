@@ -106,7 +106,7 @@ const ParticipantsComponent = ({
             placeholder="email@ejemplo.com"
             value={newParticipantEmail}
             onChange={(e) => setNewParticipantEmail(e.target.value)}
-            className="input input-bordered input-sm flex-1 text-xs md:text-sm"
+            className="input input-bordered text-gray-700 input-sm flex-1 text-xs md:text-sm"
           />
           <button
             type="submit"
