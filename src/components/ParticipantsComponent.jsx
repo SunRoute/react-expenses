@@ -64,7 +64,7 @@ const ParticipantsComponent = ({
   };
 
   return (
-    <div className="p-2 md:p-3 bg-blue-800 rounded-md">
+    <div className="p-2 md:p-3 bg-slate-500 rounded-md">
       <h3 className="text-white font-semibold mb-2 md:mb-3 text-sm md:text-base">
         Participantes
       </h3>
@@ -75,17 +75,15 @@ const ParticipantsComponent = ({
           participants.map((p) => (
             <div
               key={p.email}
-              className="flex items-center gap-1 md:gap-2 bg-blue-700 text-white px-2 md:px-3 py-1 rounded-md text-xs md:text-sm"
+              className="flex items-center gap-1 md:gap-2 bg-blue-950 text-stone-200 px-2 md:px-3 py-1 rounded-md text-xs md:text-sm"
             >
               {/* Para que el nombre no se corte */}
-              <span className="truncate">
-                {p.email?.split("@")[0] ?? p.email}
-              </span>
+              <span className="truncate">{p.name}</span>
               {/* Eliminar participante (solo si es creador) */}
               {!p.isCreator && isCreator && (
                 <button
                   onClick={() => handleRemoveParticipant(p.email)}
-                  className="hover:text-red-500 transition shrink-0"
+                  className="hover:text-red-600 transition shrink-0"
                   title="Eliminar"
                 >
                   <MdDeleteOutline />
@@ -106,12 +104,12 @@ const ParticipantsComponent = ({
             placeholder="email@ejemplo.com"
             value={newParticipantEmail}
             onChange={(e) => setNewParticipantEmail(e.target.value)}
-            className="input input-bordered text-gray-700 input-sm flex-1 text-xs md:text-sm"
+            className="input input-bordered text-slate-700 input-sm flex-1 p-2 md:p-5 text-xs md:text-sm"
           />
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-sm btn-success text-white text-xs md:text-sm whitespace-nowrap"
+            className="p-2 rounded-md bg-lime-600 hover:bg-lime-700 text-white text-xs md:text-sm whitespace-nowrap"
           >
             {loading ? "Añadiendo..." : "Añadir"}
           </button>

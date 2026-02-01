@@ -97,14 +97,14 @@ const AddProjectComponent = () => {
   return (
     <>
       <button
-        className="btn btn-primary text-white"
+        className="btn btn-primary text-stone-200"
         onClick={() => document.getElementById("add-project-modal").showModal()}
       >
         + Nuevo Proyecto
       </button>
       {/* Modal Popup para Crear un nuevo proyecto */}
       <dialog id="add-project-modal" className="modal">
-        <div className="modal-box w-full max-w-md">
+        <div className="modal-box w-5/6 max-w-md bg-stone-200 text-blue-950">
           <h3 className="font-bold text-lg mb-4">Crear Nuevo Proyecto</h3>
 
           <form onSubmit={handleCreateProject} className="space-y-4">
@@ -125,13 +125,15 @@ const AddProjectComponent = () => {
             {/* Participantes */}
             <div>
               <label className="block text-sm font-medium mb-2">
-                Participantes (por email)
+                Participantes
               </label>
 
               {/* Participante actual */}
-              <div className="mb-3 p-2 bg-blue-100 rounded-md">
-                <span className="text-sm font-semibold text-blue-900">
-                  {currentUser.email} (Tú)
+              <div className="mb-3 p-2 bg-yellow-500 rounded-md">
+                <span className="text-sm font-semibold text-blue-950">
+                  {currentUser.displayName ?? currentUser.email} (Tú)
+                  {/* {currentUser.email?.split("@")[0] ?? currentUser.email} (Tú) */}
+                  {/* {currentUser.Name} (Tú) */}
                 </span>
               </div>
 
@@ -141,7 +143,7 @@ const AddProjectComponent = () => {
                   {participants.map((p, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-2 bg-gray-100 rounded-md"
+                      className="flex items-center justify-between p-2 bg-stone-200 rounded-md"
                     >
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">{p.email}</span>
@@ -179,7 +181,7 @@ const AddProjectComponent = () => {
                 <button
                   type="button"
                   onClick={handleAddParticipant}
-                  className="btn btn-sm btn-success text-white"
+                  className="btn btn-sm bg-lime-600 hover:bg-lime-700 text-white"
                 >
                   Añadir
                 </button>

@@ -101,12 +101,12 @@ const ProjectComponent = () => {
       </div>
 
       {loading && (
-        <p className="text-gray-600 text-sm md:text-base">
+        <p className="text-slate-600 text-sm md:text-base">
           Cargando proyectos...
         </p>
       )}
       {!loading && projects.length === 0 && (
-        <p className="text-gray-500 text-sm md:text-base">
+        <p className="text-slate-500 text-sm md:text-base">
           No hay proyectos disponibles
         </p>
       )}
@@ -116,14 +116,14 @@ const ProjectComponent = () => {
           userProjects.map((project) => (
             <div
               key={project.id}
-              className="flex flex-col gap-2 md:gap-3 p-3 md:p-4 text-white bg-blue-900 rounded-md shadow-md"
+              className="flex flex-col gap-2 md:gap-3 p-3 md:p-4 text-white bg-blue-950 rounded-md shadow-md"
             >
               <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
                 <h1 className="text-lg md:text-2xl font-semibold wrap-break-word">
                   {project.title}
                 </h1>
                 {isProjectCreator(project) && (
-                  <span className="badge badge-primary text-xs md:text-sm whitespace-nowrap">
+                  <span className="p-2 rounded-md bg-blue-950 text-stone-200 border-2 border-yellow-500 text-xs md:text-sm whitespace-nowrap">
                     Creador
                   </span>
                 )}
@@ -171,7 +171,7 @@ const ProjectComponent = () => {
         <div className="modal-box w-11/12 max-w-md">
           <h3 className="font-bold text-lg">Actualizar Proyecto</h3>
           <div className="py-4">
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block text-slate-700 font-medium mb-2">
               Título
             </label>
             <input

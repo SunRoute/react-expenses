@@ -25,7 +25,7 @@ const NavbarComponent = () => {
 
   return (
     <>
-      <nav className="flex w-full justify-between items-center bg-blue-200 shadow-md py-2 px-4 md:py-3 md:px-10">
+      <nav className="flex w-full justify-between items-center bg-blue-950 shadow-md py-2 px-4 md:py-3 md:px-10">
         {/* Logo */}
         <a href="/" className="shrink-0">
           <div className="flex gap-1 justify-center items-center cursor-pointer">
@@ -34,13 +34,13 @@ const NavbarComponent = () => {
               alt="logo-image"
               className="h-10 w-10 md:h-14 md:w-14"
             />
-            <p className="text-sm md:text-3xl font-semibold text-blue-900 hover:text-blue-800 transition ease-in-out hidden sm:block">
+            <p className="text-sm md:text-3xl pl-4 font-semibold text-stone-200 hover:text-stone-100 transition ease-in-out hidden sm:block">
               Project Creator
             </p>
           </div>
         </a>
-        {/* Logout cuando el usuario está logueado */}
-        <div className="flex gap-6 justify-center items-center text-blue-900 font-semibold">
+        <div className="flex gap-6 justify-center items-center text-stone-200 font-semibold">
+          {/* Mostrar imagen/nombre + botón de logout solo cuando el usuario está logueado */}
           {user ? (
             <div className="flex items-center gap-8">
               {user.photoURL ? (
@@ -50,8 +50,9 @@ const NavbarComponent = () => {
                   className="w-8 h-8 rounded-full"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-blue-800 text-white flex items-center justify-center font-semibold hover:bg-blue-900 transition ease-in-out">
-                  {user.email.charAt(0).toUpperCase()}
+                <div className="w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold transition ease-in-out">
+                  {user.displayName}
+                  {/* {user.email.charAt(0).toUpperCase()} */}
                 </div>
               )}
               <button
@@ -62,11 +63,9 @@ const NavbarComponent = () => {
               </button>
             </div>
           ) : (
-            <a href="/signin">
-              <h1 className="text-lg text-blue-900 font-semibold">
-                Login to start!
-              </h1>
-            </a>
+            <h1 className="text-lg text-stone-200 font-semibold">
+              ¡Inicia sesión para comenzar!
+            </h1>
           )}
         </div>
       </nav>

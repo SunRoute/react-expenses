@@ -5,14 +5,14 @@ import FooterComponent from "../components/FooterComponent";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-gray-400 flex flex-col">
+    <div className="min-h-screen bg-stone-200 flex flex-col">
       {/* navbar */}
       <NavbarComponent />
       {/* Contenedor para el proyecto */}
       <div className="flex-1 w-full py-4 md:py-6 px-3 md:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col gap-3 bg-blue-200 rounded-md p-3 md:p-4">
-            <h1 className="text-blue-900 font-semibold text-base md:text-lg">
+          <div className="flex flex-col gap-3 bg-yellow-500 rounded-md p-3 md:p-4 border-2 border-blue-950">
+            <h1 className="text-blue-950 font-semibold text-base md:text-lg">
               Mis proyectos
             </h1>
             <ProjectComponent />
@@ -21,7 +21,7 @@ const HomePage = () => {
       </div>
 
       {/* footer */}
-      <div className="mt-auto text-center py-3 md:py-4 text-gray-600 text-xs md:text-sm">
+      <div className="mt-auto text-center py-3 md:py-4 text-blue-950 text-xs md:text-sm">
         <FooterComponent appName="Project Creator" />
       </div>
     </div>

@@ -150,40 +150,55 @@ const ExpensesComponent = () => {
     return <div className="p-4">Proyecto no encontrado</div>;
   }
 
+  // Calcular el total de gastos
+  const totalExpenses = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0,
+  );
+
   return (
     <>
-      <div className="min-h-screen bg-gray-400">
-        <div className="p-4 max-w-4xl mx-auto min-h-130">
+      <div className="min-h-screen bg-blue-950 rounded-md">
+        <div className="p-4 max-w-6xl mx-auto min-h-130">
           {/* Título y botón de regresar */}
           <div className="flex items-center gap-4 mb-6">
             <button
               onClick={() => navigate("/")}
-              className="btn btn-ghost btn-circle"
+              className="btn btn-ghost btn-circle text-stone-200 hover:text-blue-950"
             >
               <MdArrowBack className="text-xl" />
             </button>
-            <h1 className="text-3xl font-bold">{project.title}</h1>
+            <h1 className="text:lg md:text-3xl font-bold">{project.title}</h1>
           </div>
 
-          {/* Participantes */}
-          <div className="mb-6 p-4 bg-blue-100 rounded-lg">
-            {/* Botón para añadir gasto */}
-            {!showForm && (
-              <button
-                onClick={() => setShowForm(true)}
-                className="btn btn-primary text-white mb-6"
-              >
-                + Añadir Gasto
-              </button>
-            )}
-            <h2 className="text-lg font-semibold mb-2">Participantes</h2>
+          <div className="mb-6 p-4 bg-slate-500 rounded-lg">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+              {/* Suma de gastos */}
+              <span className="p-2 rounded-md bg-stone-200 text-blue-950 border-2 border-blue-950 text:lg md:text-3xl font-bold whitespace-nowrap">
+                Total gastos: {totalExpenses.toFixed(2)}€
+              </span>
+              {/* Botón para añadir gasto */}
+              {!showForm && (
+                <button
+                  onClick={() => setShowForm(true)}
+                  className="btn btn-primary text-white"
+                >
+                  + Añadir Gasto
+                </button>
+              )}
+            </div>
+
+            {/* Lista de participantes */}
+            <h2 className="text-lg text-stone-200 font-semibold mb-2">
+              Participantes
+            </h2>
             <div className="flex flex-wrap gap-2">
               {project.participants.map((p) => (
                 <span
                   key={p.name}
-                  className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm"
+                  className="bg-blue-950 text-stone-200 px-3 py-2 rounded-md text-xs md:text-sm"
                 >
-                  {p.name}
+                  {p.name || p.email}
                 </span>
               ))}
             </div>
@@ -191,7 +206,7 @@ const ExpensesComponent = () => {
 
           {/* Formulario de gastos */}
           {showForm && (
-            <div className="mb-6 p-4 bg-gray-100 rounded-lg">
+            <div className="mb-6 p-4 bg-stone-200 text-blue-950 rounded-lg">
               <h2 className="text-lg font-semibold mb-4">
                 {editingExpense ? "Editar Gasto" : "Nuevo Gasto"}
               </h2>
@@ -203,7 +218,7 @@ const ExpensesComponent = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Ej: Cena en restaurante"
+                    placeholder="Ej: Reserva excursión"
                     value={concept}
                     onChange={(e) => setConcept(e.target.value)}
                     className="input input-bordered w-full"
@@ -268,7 +283,7 @@ const ExpensesComponent = () => {
                 <div className="flex gap-2">
                   <button
                     type="submit"
-                    className="btn btn-success text-white flex-1"
+                    className="btn bg-lime-600 hover:bg-lime-700 text-white flex-1"
                   >
                     {editingExpense ? "Actualizar" : "Añadir"} Gasto
                   </button>
@@ -305,7 +320,7 @@ const ExpensesComponent = () => {
                           Pagado por: {expense.paidBy}
                         </p>
                       </div>
-                      <span className="text-lg font-bold text-green-600">
+                      <span className="text-lg font-bold text-blue-950">
                         €{expense.amount.toFixed(2)}
                       </span>
                     </div>
@@ -316,7 +331,7 @@ const ExpensesComponent = () => {
                       </p>
                       <p className="ml-2">{expense.splitAmong.join(", ")}</p>
                       <p className="ml-2 font-semibold">
-                        €{expense.amountPerPerson.toFixed(2)} por persona
+                        {expense.amountPerPerson.toFixed(2)}€ por persona
                       </p>
                     </div>
 
