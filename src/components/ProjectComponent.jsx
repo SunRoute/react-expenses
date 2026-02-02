@@ -51,6 +51,11 @@ const ProjectComponent = () => {
   //Actualizar el proyecto
   const handleUpdateProject = async () => {
     if (!selectedProject) return;
+
+    if (!updatedTitle.trim()) {
+      toast.error("El título del proyecto no puede estar vacío");
+      return;
+    }
     try {
       await updateProject(selectedProject.id, {
         title: updatedTitle,
