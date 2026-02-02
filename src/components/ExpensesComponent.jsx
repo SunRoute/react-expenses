@@ -21,6 +21,7 @@ const ExpensesComponent = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState(null);
+  const [allParticipantNames, setAllParticipantNames] = useState([]);
   const currentUser = getCurrentUser();
 
   // Estados de la aplicación
@@ -38,8 +39,30 @@ const ExpensesComponent = () => {
         setPaidBy(currentUser.displayName || currentUser.email);
         setSplitAmong(projectData.participants.map((p) => p.name));
 
+        // Guardar los nombres de participantes actuales
+        const participantNames = projectData.participants.map(
+          (p) => p.name || p.email,
+        );
+        setSplitAmong(participantNames);
+        setAllParticipantNames(participantNames);
+
         const expensesData = await getProjectExpenses(projectId);
         setExpenses(expensesData);
+        // Si hay gastos, combinar con participantes históricos
+        if (expensesData.length > 0) {
+          const historicalParticipants = new Set(participantNames);
+          expensesData.forEach((expense) => {
+            if (expense.splitAmong) {
+              expense.splitAmong.forEach((name) => {
+                historicalParticipants.add(name);
+              });
+            }
+            if (expense.paidBy) {
+              historicalParticipants.add(expense.paidBy);
+            }
+          });
+          setAllParticipantNames(Array.from(historicalParticipants));
+        }
       } catch (error) {
         toast.error("Error al cargar el proyecto");
         navigate("/");
@@ -138,9 +161,10 @@ const ExpensesComponent = () => {
     setConcept("");
     setAmount("");
     setPaidBy(currentUser.displayName || currentUser.email);
-    setSplitAmong(project.participants.map((p) => p.name));
+    setSplitAmong(project.participants.map((p) => p.name || p.email));
     setShowForm(false);
   };
+
   //Verificar si el usuario es el creador del proyecto
   if (loading) {
     return <div className="p-4">Cargando...</div>;
@@ -158,7 +182,7 @@ const ExpensesComponent = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-blue-950 rounded-md">
+      <div className="bg-blue-950 rounded-md">
         <div className="p-4 max-w-6xl mx-auto min-h-130">
           {/* Título y botón de regresar */}
           <div className="flex items-center gap-4 mb-6">
@@ -251,9 +275,12 @@ const ExpensesComponent = () => {
                     onChange={(e) => setPaidBy(e.target.value)}
                     className="select select-bordered w-full"
                   >
-                    {project.participants.map((p) => (
-                      <option key={p.name} value={p.name}>
-                        {p.name}
+                    {allParticipantNames.map((name) => (
+                      <option key={name} value={name}>
+                        {name}
+                        {!project.participants.some(
+                          (p) => (p.name || p.email) === name,
+                        ) && " (eliminado)"}
                       </option>
                     ))}
                   </select>
@@ -265,17 +292,29 @@ const ExpensesComponent = () => {
                     Dividir entre
                   </label>
                   <div className="space-y-2">
-                    {project.participants.map((p) => (
-                      <label key={p.name} className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={splitAmong.includes(p.name)}
-                          onChange={() => toggleParticipant(p.name)}
-                          className="checkbox"
-                        />
-                        <span>{p.name}</span>
-                      </label>
-                    ))}
+                    {allParticipantNames.map((name) => {
+                      const isActive = project.participants.some(
+                        (p) => (p.name || p.email) === name,
+                      );
+                      return (
+                        <label key={name} className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={splitAmong.includes(name)}
+                            onChange={() => toggleParticipant(name)}
+                            className="checkbox"
+                          />
+                          <span
+                            className={
+                              !isActive ? "text-gray-500 line-through" : ""
+                            }
+                          >
+                            {name}
+                            {!isActive && " (eliminado)"}
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -303,34 +342,39 @@ const ExpensesComponent = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Gastos</h2>
             {expenses.length === 0 ? (
-              <p className="text-gray-500">No hay gastos registrados</p>
+              <p className="text-blue-950">No hay gastos registrados</p>
             ) : (
               <div className="space-y-3">
                 {expenses.map((expense) => (
                   <div
                     key={expense.id}
-                    className="p-4 bg-white border rounded-lg shadow"
+                    className="p-4 bg-stone-200 text-blue-950 border rounded-lg shadow"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="font-semibold text-lg">
+                        <h3 className="font-semibold text-2xl pb-2">
                           {expense.concept}
                         </h3>
-                        <p className="text-sm text-gray-600">
-                          Pagado por: {expense.paidBy}
+                        <p className="text-sm text-slate-600 pb-1">
+                          Pagado por:{" "}
+                        </p>
+                        <p className="text-sm text-slate-600 pb-1 font-bold">
+                          {expense.paidBy}
                         </p>
                       </div>
-                      <span className="text-lg font-bold text-blue-950">
-                        €{expense.amount.toFixed(2)}
+                      <span className="text-lg font-bold bg-yellow-500 border-2 rounded-md p-2 border-blue-950 text-blue-950">
+                        {expense.amount.toFixed(2)}€
                       </span>
                     </div>
 
-                    <div className="mb-3 text-sm text-gray-600">
-                      <p>
+                    <div className="mb-3 text-sm text-slate-600">
+                      <p className="pb-1">
                         Dividido entre ({expense.splitAmong.length} personas):
                       </p>
-                      <p className="ml-2">{expense.splitAmong.join(", ")}</p>
-                      <p className="ml-2 font-semibold">
+                      <p className="font-bold pb-1">
+                        {expense.splitAmong.join(", ")}
+                      </p>
+                      <p className="font-bold">
                         {expense.amountPerPerson.toFixed(2)}€ por persona
                       </p>
                     </div>
