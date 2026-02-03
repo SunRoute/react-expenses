@@ -21,6 +21,7 @@ const ExpensesComponent = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const [allParticipantNames, setAllParticipantNames] = useState([]);
   const currentUser = getCurrentUser();
 
@@ -88,6 +89,7 @@ const ExpensesComponent = () => {
       return;
     }
     //Añadir el gasto al proyecto
+    setSubmitting(true);
     try {
       const newExpense = {
         concept: concept.trim(),
@@ -119,6 +121,8 @@ const ExpensesComponent = () => {
     } catch (error) {
       toast.error("Error al guardar el gasto");
       console.error(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -206,6 +210,7 @@ const ExpensesComponent = () => {
                 <button
                   onClick={() => setShowForm(true)}
                   className="btn btn-primary text-white"
+                  disabled={submitting}
                 >
                   + Añadir Gasto
                 </button>
@@ -246,6 +251,7 @@ const ExpensesComponent = () => {
                     value={concept}
                     onChange={(e) => setConcept(e.target.value)}
                     className="input input-bordered w-full"
+                    disabled={submitting}
                   />
                 </div>
 
@@ -262,6 +268,7 @@ const ExpensesComponent = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     className="input input-bordered w-full"
+                    disabled={submitting}
                   />
                 </div>
 
@@ -274,6 +281,7 @@ const ExpensesComponent = () => {
                     value={paidBy}
                     onChange={(e) => setPaidBy(e.target.value)}
                     className="select select-bordered w-full"
+                    disabled={submitting}
                   >
                     {allParticipantNames.map((name) => (
                       <option key={name} value={name}>
@@ -303,6 +311,7 @@ const ExpensesComponent = () => {
                             checked={splitAmong.includes(name)}
                             onChange={() => toggleParticipant(name)}
                             className="checkbox"
+                            disabled={submitting}
                           />
                           <span
                             className={
@@ -323,6 +332,7 @@ const ExpensesComponent = () => {
                   <button
                     type="submit"
                     className="btn bg-lime-600 hover:bg-lime-700 text-white flex-1"
+                    disabled={submitting}
                   >
                     {editingExpense ? "Actualizar" : "Añadir"} Gasto
                   </button>
@@ -330,6 +340,7 @@ const ExpensesComponent = () => {
                     type="button"
                     onClick={handleCancelEdit}
                     className="btn flex-1"
+                    disabled={submitting}
                   >
                     Cancelar
                   </button>
@@ -389,6 +400,7 @@ const ExpensesComponent = () => {
                       <button
                         onClick={() => handleDeleteExpense(expense.id)}
                         className="btn btn-sm btn-error bg-red-500 text-white"
+                        disabled={submitting}
                       >
                         <MdDeleteOutline />
                       </button>

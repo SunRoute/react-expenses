@@ -9,6 +9,7 @@ const AddProjectComponent = () => {
   const [title, setTitle] = useState("");
   const [participants, setParticipants] = useState([]);
   const [newParticipantEmail, setNewParticipantEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const currentUser = getCurrentUser();
   //Validar que sea un email válido
   const isValidEmail = (email) => {
@@ -60,11 +61,14 @@ const AddProjectComponent = () => {
   //Crear un nuevo proyecto
   const handleCreateProject = async (e) => {
     e.preventDefault();
+    if (submitting) return; // evitar dobles envíos
     //Validar que el título no esté vacío
     if (!title.trim()) {
       toast.error("El título del proyecto es requerido");
       return;
     }
+
+    setSubmitting(true);
     //Recorrer todos los participantes y añadirlos al array
     try {
       const allParticipants = [
@@ -91,6 +95,8 @@ const AddProjectComponent = () => {
     } catch (error) {
       toast.error("Error al crear el proyecto");
       console.error(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -190,8 +196,12 @@ const AddProjectComponent = () => {
 
             {/* Acciones */}
             <div className="modal-action">
-              <button type="submit" className="btn btn-primary text-white">
-                Crear Proyecto
+              <button
+                type="submit"
+                className="btn btn-primary text-white"
+                disabled={submitting}
+              >
+                {submitting ? "Creando..." : "Crear Proyecto"}
               </button>
               <button
                 type="button"
@@ -199,6 +209,7 @@ const AddProjectComponent = () => {
                 onClick={() =>
                   document.getElementById("add-project-modal").close()
                 }
+                disabled={submitting}
               >
                 Cancelar
               </button>
