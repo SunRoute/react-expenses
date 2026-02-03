@@ -138,8 +138,6 @@ const AddProjectComponent = () => {
               <div className="mb-3 p-2 bg-yellow-500 rounded-md">
                 <span className="text-sm font-semibold text-blue-950">
                   {currentUser.displayName ?? currentUser.email} (Tú)
-                  {/* {currentUser.email?.split("@")[0] ?? currentUser.email} (Tú) */}
-                  {/* {currentUser.Name} (Tú) */}
                 </span>
               </div>
 

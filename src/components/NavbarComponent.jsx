@@ -8,12 +8,14 @@ import { useNavigate } from "react-router";
 //Componente para mostrar y gestionar el navbar
 const NavbarComponent = () => {
   const [user, setUser] = useState(null);
+  const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
 
   //Obtener el usuario actual y actualizar la variable user cuando cambie
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setImageError(false);
     });
     return () => unsubscribe();
   }, []);
@@ -22,6 +24,9 @@ const NavbarComponent = () => {
     await logout();
     navigate("/signin");
   };
+
+  const displayName =
+    user?.displayName || (user?.email ? user.email.split("@")[0] : "");
 
   return (
     <>
@@ -39,22 +44,28 @@ const NavbarComponent = () => {
             </p>
           </div>
         </a>
+
         <div className="flex gap-6 justify-center items-center text-stone-200 font-semibold">
           {/* Mostrar imagen/nombre + botón de logout solo cuando el usuario está logueado */}
           {user ? (
             <div className="flex items-center gap-8">
-              {user.photoURL ? (
+              {user?.photoURL && !imageError ? (
                 <img
-                  src={user?.photoURL}
+                  src={user.photoURL}
                   alt="profile"
-                  className="w-8 h-8 rounded-full"
+                  onError={() => setImageError(true)}
+                  className="w-8 h-8 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold transition ease-in-out">
-                  {user.displayName}
-                  {/* {user.email.charAt(0).toUpperCase()} */}
+                <div className="w-8 h-8 rounded-full bg-blue-950 border-2 border-yellow-500 text-white flex items-center justify-center font-semibold transition ease-in-out">
+                  {displayName ? displayName.charAt(0).toUpperCase() : ""}
                 </div>
               )}
+              <span className="hidden sm:inline text-sm md:text-base truncate max-w-xs">
+                {displayName || user?.email}
+              </span>
+
+              {/* Botón de logout */}
               <button
                 onClick={handleLogout}
                 className="bg-red-600 text-white text-sm py-2 px-4 rounded-md hover:bg-red-700 transition ease-in-out"
