@@ -111,7 +111,7 @@ const ProjectComponent = () => {
         </p>
       )}
       {!loading && projects.length === 0 && (
-        <p className="text-slate-500 text-sm md:text-base">
+        <p className="text-blue-950 text-sm md:text-base">
           No hay proyectos disponibles
         </p>
       )}
@@ -141,13 +141,6 @@ const ProjectComponent = () => {
               />
               {/* Botones para ver los gastos y acciones sobre el proyecto */}
               <div className="flex flex-col sm:flex-row w-full justify-end items-stretch sm:items-center gap-2 mt-3 md:mt-4">
-                <button
-                  className="btn btn-info btn-sm md:btn-md text-white flex gap-1 md:gap-2 px-2 md:px-4 text-xs md:text-sm order-1 sm:order-0"
-                  onClick={() => handleViewExpenses(project.id)}
-                >
-                  <AiOutlineEye className="text-base md:text-lg" />
-                  <span className="hidden xs:inline">Ver Gastos</span>
-                </button>
                 {isProjectCreator(project) && (
                   <>
                     <button
@@ -166,6 +159,13 @@ const ProjectComponent = () => {
                     </button>
                   </>
                 )}
+                <button
+                  className="btn btn-info btn-sm md:btn-md text-white flex gap-1 md:gap-2 px-2 md:px-4 text-xs md:text-sm order-1 sm:order-0"
+                  onClick={() => handleViewExpenses(project.id)}
+                >
+                  <AiOutlineEye className="text-base md:text-lg" />
+                  <span className="hidden xs:inline">Ver Gastos</span>
+                </button>
               </div>
             </div>
           ))}

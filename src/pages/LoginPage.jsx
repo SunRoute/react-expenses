@@ -69,12 +69,12 @@ const LoginPage = () => {
           />
           <button
             type="submit"
-            className="bg-slate-500 text-white p-2 rounded-md hover:bg-slate-600 transition"
+            className="bg-blue-900 text-white p-2 rounded-md hover:bg-blue-950 transition"
           >
             Login
           </button>
         </form>
-        <span className="my-4 text-sm font-bold text-white">--- Or ---</span>
+        <span className="my-4 text-sm text-blue-950">--- Or ---</span>
         <button
           onClick={handleGoogleLogin}
           className="bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600 transition"
@@ -83,7 +83,7 @@ const LoginPage = () => {
         </button>
       </div>
       {/* footer */}
-      <div className="mt-auto text-center py-4 text-gray-500">
+      <div className="mt-auto text-center py-4">
         <FooterComponent appName="Project Creator" />
       </div>
     </>

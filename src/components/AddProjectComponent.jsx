@@ -143,22 +143,23 @@ const AddProjectComponent = () => {
 
               {/* Lista de participantes añadidos */}
               {participants.length > 0 && (
-                <div className="mb-3 space-y-2">
+                <div className="mb-6 space-y-2">
                   {participants.map((p, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-2 bg-stone-200 rounded-md"
+                      className="flex items-center justify-between  bg-stone-200 rounded-md"
                     >
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">{p.email}</span>
-                        <span className="text-xs text-gray-500">
+                        {/* Esto serviría para indicar que el participante ya está registrado, pero hay que ver si es posible obtenerlo de Firebase */}
+                        {/* <span className="text-xs text-slate-500">
                           {p.uid ? "Registrado" : "No registrado"}
-                        </span>
+                        </span> */}
                       </div>
                       <button
                         type="button"
                         onClick={() => handleRemoveParticipant(index)}
-                        className="btn btn-ghost btn-xs text-red-600"
+                        className="btn btn-ghost btn-lg text-red-600"
                       >
                         <MdDeleteOutline />
                       </button>

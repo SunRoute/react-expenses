@@ -169,7 +169,6 @@ const ExpensesComponent = () => {
     setShowForm(false);
   };
 
-  //Verificar si el usuario es el creador del proyecto
   if (loading) {
     return <div className="p-4">Cargando...</div>;
   }
@@ -351,9 +350,11 @@ const ExpensesComponent = () => {
 
           {/* Lista de gastos */}
           <div>
-            <h2 className="text-xl font-semibold mb-4">Gastos</h2>
+            <h2 className="text-xl text-stone-200 font-semibold mb-4">
+              Gastos
+            </h2>
             {expenses.length === 0 ? (
-              <p className="text-blue-950">No hay gastos registrados</p>
+              <p className="text-yellow-500">No hay gastos registrados</p>
             ) : (
               <div className="space-y-3">
                 {expenses.map((expense) => (
